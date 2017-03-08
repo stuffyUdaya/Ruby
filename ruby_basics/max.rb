@@ -1,10 +1,10 @@
-X=[-3,-5,-7]
-max = X[0]
-puts max
+x=[-3,-5,7]
+max = x[0]
 
-for i in 0..X.length
-  if X[i]>max
-      max= X[i]
-    puts "max is #{max}"
+
+for i in 0..x.length
+  if x[i]>max
+      max= x[i]
   end
+  puts "max is #{max}"
 end
