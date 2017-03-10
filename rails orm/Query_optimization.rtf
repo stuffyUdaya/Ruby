@@ -1,0 +1,109 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf810
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fnil\fcharset0 AndaleMono;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red47\green255\blue18;\red0\green0\blue0;
+\red46\green174\blue187;\red0\green255\blue0;\red63\green63\blue63;\red255\green255\blue255;\red200\green20\blue201;
+}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c15686\c99608\c7843;\csgray\c0\c90000;
+\cssrgb\c20198\c73241\c78251;\csgenericrgb\c0\c100000\c0;\cssrgb\c31373\c31373\c31373;\cssrgb\c100000\c100000\c100000;\cssrgb\c83397\c23076\c82665;
+}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{none\}}{\leveltext\leveltemplateid1\'00;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+\margl1440\margr1440\vieww28600\viewh17520\viewkind0
+\deftab720
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f0\fs24 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Retrieve all players, then write a program that will loop through each player and display their team name, mascot and stadium. How many queries have we done?\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 2.3.1 :007 > Player.all\
+  \cf5 \cb4 Player Load (5.1ms)\cf3 \cb4   \cf6 \cb4 SELECT "players".* FROM "players"\cf3 \cb4 \
+\
+\
+\
+Player.joins(:team).where("team_id = teams.id").select("teams.name as team_name, teams.mascot, teams.stadium, players.name as player_name")\
+\
+\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f0 \cf2 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec2 Retrieve all players and write a program to loop through each player and their team name, mascot and stadium using .includes. How many queries have we done now?\
+\
+\
+\
+\
+\
+\pard\pardeftab720\sl364\partightenfactor0
+
+\fs28 \cf7 \cb8 \strokec7 Retrieve all players from the 'Chicago Bulls' by using .includes
+\fs24 \cf2 \cb1 \strokec2 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 Player.includes(:team).where("teams.name='Chicago Bulls'").references(:team)\
+\
+\
+\
+\pard\pardeftab720\sl340\partightenfactor0
+
+\f0\fs28 \cf7 \cb8 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec7 Retrieve all players along with the team name that play at the 'Staples Center'\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs24 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 2.3.1 :072 > Player.joins(:team).where("teams.stadium='Staples Center'").select("players.name as player_name,teams.name,teams.stadium")\
+  \cf9 \cb4 Player Load (4.3ms)\cf3 \cb4   SELECT players.name as player_name,teams.name,teams.stadium FROM "players" INNER JOIN "teams" ON "teams"."id" = "players"."team_id" WHERE (teams.stadium='Staples Center')\
+\
+\
+\
+\
+\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sl364\partightenfactor0
+\ls1\ilvl0
+\f0\fs28 \cf7 \cb8 \CocoaLigature1 		\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec7 Retrieve all teams that have any player that start their name with the letter 'Z' by using .includes and .joins\cb1 \uc0\u8232 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs24 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 2.3.1 :074 > Player.joins(:team).where("players.name LIKE 'z%'").select("players.name as player_name, teams.name")\
+  \cf9 \cb4 Player Load (2.1ms)\cf3 \cb4   SELECT players.name as player_name, teams.name FROM "players" INNER JOIN "teams" ON "teams"."id" = "players"."team_id" WHERE (players.name LIKE 'z%')\
++----+------------------------+---------------+\
+| id | name                   | player_name   |\
++----+------------------------+---------------+\
+|    | Golden State Warriors  | Zaza Pachulia |\
+|    | Memphis Grizzlies      | Zach Randolph |\
+|    | Minnesota Timberwolves | Zach LaVine   |\
++----+------------------------+---------------+\
+\pard\tx720\pardeftab720\sl364\partightenfactor0
+
+\f0\fs28 \cf7 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec7 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs24 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 2.3.1 :079 > Team.includes(:players).where("players.name LIKE 'Z%'").references(:players)\
+  \cf5 \cb4 SQL (4.2ms)\cf3 \cb4   \cf6 \cb4 SELECT "teams"."id" AS t0_r0, "teams"."name" AS t0_r1, "teams"."mascot" AS t0_r2, "teams"."stadium" AS t0_r3, "teams"."created_at" AS t0_r4, "teams"."updated_at" AS t0_r5, "players"."id" AS t1_r0, "players"."name" AS t1_r1, "players"."team_id" AS t1_r2, "players"."created_at" AS t1_r3, "players"."updated_at" AS t1_r4 FROM "teams" LEFT OUTER JOIN "players" ON "players"."team_id" = "teams"."id" WHERE (players.name LIKE 'Z%')\cf3 \cb4 \
++----+------------------------+-----------------+---------------+-------------------------+-------------------------+\
+| id | name                   | mascot          | stadium       | created_at              | updated_at              |\
++----+------------------------+-----------------+---------------+-------------------------+-------------------------+\
+| 10 | Golden State Warriors  | Thunder         | Oracle Arena  | 2017-03-09 21:09:45 UTC | 2017-03-09 21:09:45 UTC |\
+| 15 | Memphis Grizzlies      | Griz            | FedExForum    | 2017-03-09 21:09:47 UTC | 2017-03-09 21:09:47 UTC |\
+| 18 | Minnesota Timberwolves | Crunch the Wolf | Target Center | 2017-03-09 21:09:48 UTC | 2017-03-09 21:09:48 UTC |\
++----+------------------------+-----------------+---------------+-------------------------+-------------------------+\
+3 rows in set\
+\pard\tx720\pardeftab720\sl364\partightenfactor0
+
+\f0\fs28 \cf7 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec7 \
+\
+\
+\
+\pard\pardeftab720\sl340\qc\partightenfactor0
+\cf7 \cb8 \
+\
+\
+\
+}

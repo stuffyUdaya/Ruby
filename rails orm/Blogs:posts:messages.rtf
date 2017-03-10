@@ -1,0 +1,204 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf810
+{\fonttbl\f0\fnil\fcharset0 AndaleMono;\f1\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;\red47\green255\blue18;\red0\green0\blue0;\red192\green192\blue192;
+\red47\green180\blue29;\red0\green0\blue0;\red46\green174\blue187;\red0\green255\blue0;\red200\green20\blue201;
+}
+{\*\expandedcolortbl;;\cssrgb\c15686\c99608\c7843;\csgray\c0\c90000;\cssrgb\c79890\c79891\c79890;
+\cssrgb\c20239\c73899\c14948;\cssrgb\c0\c0\c0;\cssrgb\c20198\c73241\c78251;\csgenericrgb\c0\c100000\c0;\cssrgb\c83397\c23076\c82665;
+}
+\margl1440\margr1440\vieww38200\viewh21120\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf2 \cb3 \CocoaLigature0 vagrant@vagrant-ubuntu-trusty-64:/vagrant/blogs_posts_messages$ rails g model Blog name:string description:text \
+Running via Spring preloader in process 12970\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf4 \cb3       invoke\cf2 \cb3   active_record\
+\cf5 \cb3       create\cf2 \cb3     db/migrate/20170309192832_create_blogs.rb\
+\cf5 \cb3       create\cf2 \cb3     app/models/blog.rb\
+\cf4 \cb3       invoke\cf2 \cb3     test_unit\
+\cf5 \cb3       create\cf2 \cb3       test/models/blog_test.rb\
+\cf5 \cb3       create\cf2 \cb3       test/fixtures/blogs.yml\
+\
+\
+vagrant@vagrant-ubuntu-trusty-64:/vagrant/blogs_posts_messages$ rake db:migrate\
+== 20170309192832 CreateBlogs: migrating ======================================\
+-- create_table(:blogs)\
+   -> 0.0067s\
+== 20170309192832 CreateBlogs: migrated (0.0078s) =============================\
+\
+vagrant@vagrant-ubuntu-trusty-64:/vagrant/blogs_posts_messages$ rake db:migrate:status\
+\
+database: /vagrant/blogs_posts_messages/db/development.sqlite3\
+\
+ Status   Migration ID    Migration Name\
+--------------------------------------------------\
+   up     20170309192832  Create blogs\
+\
+vagrant@vagrant-ubuntu-trusty-64:/vagrant/blogs_posts_messages$ rails g model Post title:string content:text blog:references\
+Running via Spring preloader in process 13005\
+\cf4 \cb3       invoke\cf2 \cb3   active_record\
+\cf5 \cb3       create\cf2 \cb3     db/migrate/20170309193143_create_posts.rb\
+\cf5 \cb3       create\cf2 \cb3     app/models/post.rb\
+\cf4 \cb3       invoke\cf2 \cb3     test_unit\
+\cf5 \cb3       create\cf2 \cb3       test/models/post_test.rb\
+\cf5 \cb3       create\cf2 \cb3       test/fixtures/posts.yml\
+vagrant@vagrant-ubuntu-trusty-64:/vagrant/blogs_posts_messages$ rake db:migrate:status\
+\
+database: /vagrant/blogs_posts_messages/db/development.sqlite3\
+\
+ Status   Migration ID    Migration Name\
+--------------------------------------------------\
+   up     20170309192832  Create blogs\
+  down    20170309193143  Create posts\
+\
+\
+\
+\
+\
+vagrant@vagrant-ubuntu-trusty-64:/vagrant/blogs_posts_messages$ rails g model Message author:string message:text post:references\
+Running via Spring preloader in process 13136\
+\cf4 \cb3       invoke\cf2 \cb3   active_record\
+\cf5 \cb3       create\cf2 \cb3     db/migrate/20170309193337_create_messages.rb\
+\cf5 \cb3       create\cf2 \cb3     app/models/message.rb\
+\cf4 \cb3       invoke\cf2 \cb3     test_unit\
+\cf5 \cb3       create\cf2 \cb3       test/models/message_test.rb\
+\cf5 \cb3       create\cf2 \cb3       test/fixtures/messages.yml\
+vagrant@vagrant-ubuntu-trusty-64:/vagrant/blogs_posts_messages$ rake db:migrate:status\
+\
+database: /vagrant/blogs_posts_messages/db/development.sqlite3\
+\
+ Status   Migration ID    Migration Name\
+--------------------------------------------------\
+   up     20170309192832  Create blogs\
+   up     20170309193143  Create posts\
+  down    20170309193337  Create messages\
+\
+\
+\
+\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f1 \cf6 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec6 know how to retrieve all posts for the first blog.
+\f0 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf2 \
+\
+2.3.1 :075 > first_blog = Blog.first\
+  \cf7 \cb3 Blog Load (2.9ms)\cf2 \cb3   \cf8 \cb3 SELECT  "blogs".* FROM "blogs"  ORDER BY "blogs"."id" ASC LIMIT 1\cf2 \cb3 \
++----+------------+-------------------------------------------------------------------------+-------------------------+-------------------------+\
+| id | name       | description                                                             | created_at              | updated_at              |\
++----+------------+-------------------------------------------------------------------------+-------------------------+-------------------------+\
+| 1  | Techcrunch | This blog contains all the information going around in technology world | 2017-03-09 19:55:48 UTC | 2017-03-09 19:55:48 UTC |\
++----+------------+-------------------------------------------------------------------------+-------------------------+-------------------------+\
+1 row in set\
+2.3.1 :076 > first_blog.posts\
+  \cf9 \cb3 Post Load (2.0ms)\cf2 \cb3   SELECT "posts".* FROM "posts" WHERE "posts"."blog_id" = ?  [["blog_id", 1]]\
++----+-----------------------+--------------------------------------------------------------------------------------------------------------------------------------+---------+-------------------------+-------------------------+\
+| id | title                 | content                                                                                                                              | blog_id | created_at              | updated_at              |\
++----+-----------------------+--------------------------------------------------------------------------------------------------------------------------------------+---------+-------------------------+-------------------------+\
+| 1  | Ever heard of pendo   | It mainly deals with Data Processing                                                                                                 | 1       | 2017-03-09 20:07:41 UTC | 2017-03-09 20:09:10 UTC |\
+| 2  | ever heard of Kidizen | Kidizen, a marketplace for secondhand children\'92s apparel, has raised $3.2 million in Series A funding, the company announced today.  | 1       | 2017-03-09 20:11:01 UTC | 2017-03-09 20:12:07 UTC |\
++----+-----------------------+--------------------------------------------------------------------------------------------------------------------------------------+---------+-------------------------+-------------------------+\
+2 rows in set\
+\
+\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f1 \cf6 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec6 know how to retrieve all posts for the last blog (sorted by title in the DESC order).\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 2.3.1 :078 > second_blog = Blog.second\
+  \cf9 \cb3 Blog Load (2.5ms)\cf2 \cb3   SELECT  "blogs".* FROM "blogs"  ORDER BY "blogs"."id" ASC LIMIT 1 OFFSET 1\
++----+----------+----------------------------------------------------------------------------------------+-------------------------+-------------------------+\
+| id | name     | description                                                                            | created_at              | updated_at              |\
++----+----------+----------------------------------------------------------------------------------------+-------------------------+-------------------------+\
+| 2  | Buzzfeed | It's kind of millenial blog containing the pop quizzes, celeb news and some trash talk | 2017-03-09 19:57:19 UTC | 2017-03-09 19:57:19 UTC |\
++----+----------+----------------------------------------------------------------------------------------+-------------------------+-------------------------+\
+1 row in set\
+2.3.1 :084 > second_blog.posts.order(title: :desc)\
+  \cf9 \cb3 Post Load (2.2ms)\cf2 \cb3   SELECT "posts".* FROM "posts" WHERE "posts"."blog_id" = ?  ORDER BY "posts"."title" DESC  [["blog_id", 2]]\
++----+---------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------+-------------------------+-------------------------+\
+| id | title               | content                                                                                                                                                                             | blog_id | created_at              | updated_at              |\
++----+---------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------+-------------------------+-------------------------+\
+| 4  | Pariti a Mobile App | Founded by Matthew Ford, who was previously head of acquisitions for OnTrees, a personal finance app that exited to MoneySuperMarket in 2014, Pariti is a mobile app that helps ... | 2       | 2017-03-09 20:14:37 UTC | 2017-03-09 20:14:37 UTC |\
+| 3  | Meet Hugging Face   | Meet Hugging Face, a new chatbot app for bored teenagers. The New York-based startup is creating a fun and emotional bot.                                                           | 2       | 2017-03-09 20:13:14 UTC | 2017-03-09 20:13:14 UTC |\
++----+---------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------+-------------------------+-------------------------+\
+2 rows in set\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f1 \cf6 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec6 \
+\
+know how to update the first post's title.\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 2.3.1 :086 > first_blog\
++----+------------+-------------------------------------------------------------------------+-------------------------+-------------------------+\
+| id | name       | description                                                             | created_at              | updated_at              |\
++----+------------+-------------------------------------------------------------------------+-------------------------+-------------------------+\
+| 1  | Techcrunch | This blog contains all the information going around in technology world | 2017-03-09 19:55:48 UTC | 2017-03-09 19:55:48 UTC |\
++----+------------+-------------------------------------------------------------------------+-------------------------+-------------------------+\
+1 row in set\
+2.3.1 :087 > first_blog.posts\
++----+-----------------------+--------------------------------------------------------------------------------------------------------------------------------------+---------+-------------------------+-------------------------+\
+| id | title                 | content                                                                                                                              | blog_id | created_at              | updated_at              |\
++----+-----------------------+--------------------------------------------------------------------------------------------------------------------------------------+---------+-------------------------+-------------------------+\
+| 1  | Ever heard of pendo   | It mainly deals with Data Processing                                                                                                 | 1       | 2017-03-09 20:07:41 UTC | 2017-03-09 20:09:10 UTC |\
+| 2  | ever heard of Kidizen | Kidizen, a marketplace for secondhand children\'92s apparel, has raised $3.2 million in Series A funding, the company announced today.  | 1       | 2017-03-09 20:11:01 UTC | 2017-03-09 20:12:07 UTC |\
++----+-----------------------+--------------------------------------------------------------------------------------------------------------------------------------+---------+-------------------------+-------------------------+\
+2 rows in set\
+2.3.1 :088 > first_blog.posts.first\
++----+---------------------+--------------------------------------+---------+-------------------------+-------------------------+\
+| id | title               | content                              | blog_id | created_at              | updated_at              |\
++----+---------------------+--------------------------------------+---------+-------------------------+-------------------------+\
+| 1  | Ever heard of pendo | It mainly deals with Data Processing | 1       | 2017-03-09 20:07:41 UTC | 2017-03-09 20:09:10 UTC |\
++----+---------------------+--------------------------------------+---------+-------------------------+-------------------------+\
+1 row in set\
+2.3.1 :089 > first_blog.posts.first.title = "Pendo!!new in the game"\
+ => "Pendo!!new in the game" \
+2.3.1 :090 > first_blog.posts.first\
++----+------------------------+--------------------------------------+---------+-------------------------+-------------------------+\
+| id | title                  | content                              | blog_id | created_at              | updated_at              |\
++----+------------------------+--------------------------------------+---------+-------------------------+-------------------------+\
+| 1  | Pendo!!new in the game | It mainly deals with Data Processing | 1       | 2017-03-09 20:07:41 UTC | 2017-03-09 20:09:10 UTC |\
++----+------------------------+--------------------------------------+---------+-------------------------+-------------------------+\
+1 row in set\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f1 \cf6 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec6 \
+\
+\
+\
+\pard\pardeftab720\sl280\partightenfactor0
+\cf6 know how to retrieve all blogs.\
+know how to retrieve all blogs whose id is less than 5.\
+\pard\pardeftab720\sl280\partightenfactor0
+\cf6 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 2.3.1 :123 > Blog.where(:id=>1..4)\
+  \cf7 \cb3 Blog Load (3.5ms)\cf2 \cb3   \cf8 \cb3 SELECT "blogs".* FROM "blogs" WHERE ("blogs"."id" BETWEEN 1 AND 4)\cf2 \cb3 \
++----+------------+---------------------------------------------------------------------------------------------------------------------------+-------------------------+-------------------------+\
+| id | name       | description                                                                                                               | created_at              | updated_at              |\
++----+------------+---------------------------------------------------------------------------------------------------------------------------+-------------------------+-------------------------+\
+| 1  | Techcrunch | This blog contains all the information going around in technology world                                                   | 2017-03-09 19:55:48 UTC | 2017-03-09 19:55:48 UTC |\
+| 2  | Buzzfeed   | It's kind of millenial blog containing the pop quizzes, celeb news and some trash talk                                    | 2017-03-09 19:57:19 UTC | 2017-03-09 19:57:19 UTC |\
+| 3  | Wikipedia  | It's kind of an encyclopedia containing all the information abut every thing that exists in the world                     | 2017-03-09 19:58:41 UTC | 2017-03-09 19:58:41 UTC |\
+| 4  | Google     | It was started as a search engine company and latter grown as a big tech company with its inovatove products and services | 2017-03-09 20:00:25 UTC | 2017-03-09 20:00:25 UTC |\
++----+------------+---------------------------------------------------------------------------------------------------------------------------+-------------------------+-------------------------+\
+4 rows in set\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f1 \cf6 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec6 \
+
+\f0 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 \
+}

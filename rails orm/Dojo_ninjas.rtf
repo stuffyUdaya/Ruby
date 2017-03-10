@@ -1,0 +1,199 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf810
+{\fonttbl\f0\fnil\fcharset0 AndaleMono;}
+{\colortbl;\red255\green255\blue255;\red47\green255\blue18;\red0\green0\blue0;\red192\green192\blue192;
+\red47\green180\blue29;\red200\green20\blue201;\red46\green174\blue187;\red0\green255\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c15686\c99608\c7843;\csgray\c0\c90000;\cssrgb\c79890\c79891\c79890;
+\cssrgb\c20239\c73899\c14948;\cssrgb\c83397\c23076\c82665;\cssrgb\c20198\c73241\c78251;\csgenericrgb\c0\c100000\c0;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf2 \cb3 \ul \ulc2 \CocoaLigature0 Creating a model in rails:\ulnone \
+\
+vagrant@vagrant-ubuntu-trusty-64:/vagrant/dojo_ninjas$ rails g model Dojo name:string city:string state:string\
+Running via Spring preloader in process 12077\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf4 \cb3       invoke\cf2 \cb3   active_record\
+\cf5 \cb3       create\cf2 \cb3     db/migrate/20170309171901_create_dojos.rb\
+\cf5 \cb3       create\cf2 \cb3     app/models/dojo.rb\
+\cf4 \cb3       invoke\cf2 \cb3     test_unit\
+\cf5 \cb3       create\cf2 \cb3       test/models/dojo_test.rb\
+\cf5 \cb3       create\cf2 \cb3       test/fixtures/dojos.yml\
+\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf2 \ul \ulc2 Creating a Foreign key for model:\
+\ulnone \
+\
+vagrant@vagrant-ubuntu-trusty-64:/vagrant/dojo_ninjas$ rails g model Ninja first_name:string last_name:string dojo:references\
+Running via Spring preloader in process 12112\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf4 \cb3       invoke\cf2 \cb3   active_record\
+\cf5 \cb3       create\cf2 \cb3     db/migrate/20170309172120_create_ninjas.rb\
+\cf5 \cb3       create\cf2 \cb3     app/models/ninja.rb\
+\cf4 \cb3       invoke\cf2 \cb3     test_unit\
+\cf5 \cb3       create\cf2 \cb3       test/models/ninja_test.rb\
+\cf5 \cb3       create\cf2 \cb3       test/fixtures/ninjas.yml\
+\
+\
+\
+\
+\
+2.3.1 :021 > Dojo.create(name:"Seattle Dojo",city:"Seatle",state:"WA")\
+  \cf6 \cb3  (0.0ms)\cf2 \cb3   begin transaction\
+  \cf7 \cb3 SQL (9.6ms)\cf2 \cb3   \cf8 \cb3 INSERT INTO "dojos" ("name", "city", "state", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)\cf2 \cb3   [["name", "Seattle Dojo"], ["city", "Seatle"], ["state", "WA"], ["created_at", "2017-03-09 17:40:54.653598"], ["updated_at", "2017-03-09 17:40:54.653598"]]\
+  \cf6 \cb3  (5.9ms)\cf2 \cb3   commit transaction\
++----+--------------+--------+-------+-------------------------+-------------------------+\
+| id | name         | city   | state | created_at              | updated_at              |\
++----+--------------+--------+-------+-------------------------+-------------------------+\
+| 2  | Seattle Dojo | Seatle | WA    | 2017-03-09 17:40:54 UTC | 2017-03-09 17:40:54 UTC |\
++----+--------------+--------+-------+-------------------------+-------------------------+\
+1 row in set\
+\
+\
+\
+////////\
+\
+2.3.1 :026 > Dojo.all\
+  \cf7 \cb3 Dojo Load (1.9ms)\cf2 \cb3   \cf8 \cb3 SELECT "dojos".* FROM "dojos"\cf2 \cb3 \
++----+--------------------------+-------------+-------+-------------------------+-------------------------+\
+| id | name                     | city        | state | created_at              | updated_at              |\
++----+--------------------------+-------------+-------+-------------------------+-------------------------+\
+| 1  | Greensboro Station Plaza | McLean      | D.C   | 2017-03-09 17:36:13 UTC | 2017-03-09 17:36:13 UTC |\
+| 2  | Seattle Dojo             | Seatle      | WA    | 2017-03-09 17:40:54 UTC | 2017-03-09 17:40:54 UTC |\
+| 3  | SV Dojo                  | SanJose     | CA    | 2017-03-09 17:41:28 UTC | 2017-03-09 17:41:28 UTC |\
+| 4  | LA Dojo                  | Los Angeles | CA    | 2017-03-09 17:41:57 UTC | 2017-03-09 17:41:57 UTC |\
+| 5  | Dallas Dojo              | Dallas      | TX    | 2017-03-09 17:42:24 UTC | 2017-03-09 17:42:24 UTC |\
++----+--------------------------+-------------+-------+-------------------------+-------------------------+\
+5 rows in set\
+////////////////\
+\
+\
+2.3.1 :005 > Dojo.delete(6)\
+  \cf7 \cb3 SQL (8.5ms)\cf2 \cb3   \cf8 \cb3 DELETE FROM "dojos" WHERE "dojos"."id" = ?\cf2 \cb3   [["id", 6]]\
+ => 1 \
+2.3.1 :006 > Dojo.all\
+  \cf6 \cb3 Dojo Load (2.6ms)\cf2 \cb3   SELECT "dojos".* FROM "dojos"\
++----+--------------------------+-------------+-------+-------------------------+-------------------------+\
+| id | name                     | city        | state | created_at              | updated_at              |\
++----+--------------------------+-------------+-------+-------------------------+-------------------------+\
+| 1  | Greensboro Station Plaza | McLean      | D.C   | 2017-03-09 17:36:13 UTC | 2017-03-09 17:36:13 UTC |\
+| 2  | Seattle Dojo             | Seatle      | WA    | 2017-03-09 17:40:54 UTC | 2017-03-09 17:40:54 UTC |\
+| 3  | SV Dojo                  | SanJose     | CA    | 2017-03-09 17:41:28 UTC | 2017-03-09 17:41:28 UTC |\
+| 4  | LA Dojo                  | Los Angeles | CA    | 2017-03-09 17:41:57 UTC | 2017-03-09 17:41:57 UTC |\
+| 5  | Dallas Dojo              | Dallas      | TX    | 2017-03-09 17:42:24 UTC | 2017-03-09 17:42:24 UTC |\
++----+--------------------------+-------------+-------+-------------------------+-------------------------+\
+5 rows in set\
+\
+\
+//////\
+\
+\
+2.3.1 :049 > Ninja.create(first_name: "Hermoine", last_name: "Granger", dojo_id: 10)\
+  \cf7 \cb3  (0.2ms)\cf2 \cb3   \cf8 \cb3 begin transaction\cf2 \cb3 \
+  \cf6 \cb3 SQL (4.7ms)\cf2 \cb3   INSERT INTO "ninjas" ("first_name", "last_name", "dojo_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["first_name", "Hermoine"], ["last_name", "Granger"], ["dojo_id", 10], ["created_at", "2017-03-09 18:10:42.770097"], ["updated_at", "2017-03-09 18:10:42.770097"]]\
+  \cf7 \cb3  (3.8ms)\cf2 \cb3   \cf8 \cb3 commit transaction\cf2 \cb3 \
++----+------------+-----------+---------+-------------------------+-------------------------+\
+| id | first_name | last_name | dojo_id | created_at              | updated_at              |\
++----+------------+-----------+---------+-------------------------+-------------------------+\
+| 2  | Hermoine   | Granger   | 10      | 2017-03-09 18:10:42 UTC | 2017-03-09 18:10:42 UTC |\
++----+------------+-----------+---------+-------------------------+-------------------------+\
+1 row in set\
+\
+/////////////////\
+\
+2.3.1 :055 > Ninja.all\
+  \cf7 \cb3 Ninja Load (2.7ms)\cf2 \cb3   \cf8 \cb3 SELECT "ninjas".* FROM "ninjas"\cf2 \cb3 \
++----+------------+-----------+---------+-------------------------+-------------------------+\
+| id | first_name | last_name | dojo_id | created_at              | updated_at              |\
++----+------------+-----------+---------+-------------------------+-------------------------+\
+| 1  | Harry      | Potter    | 10      | 2017-03-09 18:09:40 UTC | 2017-03-09 18:09:40 UTC |\
+| 2  | Hermoine   | Granger   | 10      | 2017-03-09 18:10:42 UTC | 2017-03-09 18:10:42 UTC |\
+| 3  | Neville    | Thomas    | 10      | 2017-03-09 18:12:40 UTC | 2017-03-09 18:12:40 UTC |\
+| 4  | Ron        | Weasley   | 9       | 2017-03-09 18:13:22 UTC | 2017-03-09 18:13:22 UTC |\
+| 5  | Fred       | Weasley   | 9       | 2017-03-09 18:13:36 UTC | 2017-03-09 18:13:36 UTC |\
+| 6  | percy      | Weasley   | 9       | 2017-03-09 18:13:50 UTC | 2017-03-09 18:13:50 UTC |\
++----+------------+-----------+---------+-------------------------+-------------------------+\
+6 rows in set\
+\
+\
+\
+\
+\
+/////////////////////////\
+\
+2.3.1 :064 > Ninja.where(:dojo_id => 8).all\
+  \cf6 \cb3 Ninja Load (2.1ms)\cf2 \cb3   SELECT "ninjas".* FROM "ninjas" WHERE "ninjas"."dojo_id" = ?  [["dojo_id", 8]]\
++----+------------+-----------+---------+-------------------------+-------------------------+\
+| id | first_name | last_name | dojo_id | created_at              | updated_at              |\
++----+------------+-----------+---------+-------------------------+-------------------------+\
+| 7  | George     | Weasley   | 8       | 2017-03-09 18:14:43 UTC | 2017-03-09 18:14:43 UTC |\
+| 8  | Lee        | Jordan    | 8       | 2017-03-09 18:15:05 UTC | 2017-03-09 18:15:05 UTC |\
+| 9  | Dudley     | Dursley   | 8       | 2017-03-09 18:15:57 UTC | 2017-03-09 18:15:57 UTC |\
++----+------------+-----------+---------+-------------------------+-------------------------+\
+3 rows in set\
+2.3.1 :065 > Ninja.where(:dojo_id => 9).all\
+  \cf7 \cb3 Ninja Load (1.9ms)\cf2 \cb3   \cf8 \cb3 SELECT "ninjas".* FROM "ninjas" WHERE "ninjas"."dojo_id" = ?\cf2 \cb3   [["dojo_id", 9]]\
++----+------------+-----------+---------+-------------------------+-------------------------+\
+| id | first_name | last_name | dojo_id | created_at              | updated_at              |\
++----+------------+-----------+---------+-------------------------+-------------------------+\
+| 4  | Ron        | Weasley   | 9       | 2017-03-09 18:13:22 UTC | 2017-03-09 18:13:22 UTC |\
+| 5  | Fred       | Weasley   | 9       | 2017-03-09 18:13:36 UTC | 2017-03-09 18:13:36 UTC |\
+| 6  | percy      | Weasley   | 9       | 2017-03-09 18:13:50 UTC | 2017-03-09 18:13:50 UTC |\
++----+------------+-----------+---------+-------------------------+-------------------------+\
+3 rows in set\
+\
+///////////////////////\
+\
+\
+2.3.1 :076 > Ninja.where(:dojo_id => 9).select( :first_name)\
+  \cf7 \cb3 Ninja Load (2.2ms)\cf2 \cb3   \cf8 \cb3 SELECT "ninjas"."first_name" FROM "ninjas" WHERE "ninjas"."dojo_id" = ?\cf2 \cb3   [["dojo_id", 9]]\
++----+------------+\
+| id | first_name |\
++----+------------+\
+|    | Ron        |\
+|    | Fred       |\
+|    | percy      |\
++----+------------+\
+3 rows in set\
+\
+\
+\
+////////////////////////\
+\
+\
+2.3.1 :079 > Ninja.where(:dojo_id => 9).select( :first_name).order(created_at: :desc)\
+  \cf6 \cb3 Ninja Load (2.7ms)\cf2 \cb3   SELECT "ninjas"."first_name" FROM "ninjas" WHERE "ninjas"."dojo_id" = ?  ORDER BY "ninjas"."created_at" DESC  [["dojo_id", 9]]\
++----+------------+\
+| id | first_name |\
++----+------------+\
+|    | percy      |\
+|    | Fred       |\
+|    | Ron        |\
++----+------------+\
+3 rows in set\
+\
+/////////////////////////\
+\
+\
+\
+2.3.1 :007 > first_dojo = Dojo.first\
+  \cf6 \cb3 Dojo Load (2.4ms)\cf2 \cb3   SELECT  "dojos".* FROM "dojos"  ORDER BY "dojos"."id" ASC LIMIT 1\
++----+--------------------------+--------+-------+-------------------------+-------------------------+\
+| id | name                     | city   | state | created_at              | updated_at              |\
++----+--------------------------+--------+-------+-------------------------+-------------------------+\
+| 10 | GreensBoro Station Plaza | McLean | DC    | 2017-03-09 18:08:15 UTC | 2017-03-09 18:08:15 UTC |\
++----+--------------------------+--------+-------+-------------------------+-------------------------+\
+1 row in set\
+2.3.1 :008 > first_dojo.ninjas\
+  \cf7 \cb3 Ninja Load (3.6ms)\cf2 \cb3   \cf8 \cb3 SELECT "ninjas".* FROM "ninjas" WHERE "ninjas"."dojo_id" = ?\cf2 \cb3   [["dojo_id", 10]]\
++----+------------+-----------+---------+-------------------------+-------------------------+\
+| id | first_name | last_name | dojo_id | created_at              | updated_at              |\
++----+------------+-----------+---------+-------------------------+-------------------------+\
+| 1  | Harry      | Potter    | 10      | 2017-03-09 18:09:40 UTC | 2017-03-09 18:09:40 UTC |\
+| 2  | Hermoine   | Granger   | 10      | 2017-03-09 18:10:42 UTC | 2017-03-09 18:10:42 UTC |\
+| 3  | Neville    | Thomas    | 10      | 2017-03-09 18:12:40 UTC | 2017-03-09 18:12:40 UTC |\
++----+------------+-----------+---------+-------------------------+-------------------------+\
+3 rows in set\
+\
+}

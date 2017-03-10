@@ -1,0 +1,186 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf810
+{\fonttbl\f0\fnil\fcharset0 AndaleMono;}
+{\colortbl;\red255\green255\blue255;\red47\green255\blue18;\red0\green0\blue0;\red200\green20\blue201;
+\red46\green174\blue187;\red0\green255\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c15686\c99608\c7843;\csgray\c0\c90000;\cssrgb\c83397\c23076\c82665;
+\cssrgb\c20198\c73241\c78251;\csgenericrgb\c0\c100000\c0;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf2 \cb3 \CocoaLigature0 	from -e:1:in `<main>'\
+2.3.1 :011 > User.create(first_name:"jane", lat_name:"Doe", email:"jane@email.com",password:"password",age:55)\
+  \cf4  (0.1ms)\cf2   begin transaction\
+  \cf5 SQL (6.2ms)\cf2   \cf6 INSERT INTO "users" ("first_name", "lat_name", "email", "password", "age", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)\cf2   [["first_name", "jane"], ["lat_name", "Doe"], ["email", "jane@email.com"], ["password", "password"], ["age", 55], ["created_at", "2017-03-08 21:13:09.825903"], ["updated_at", "2017-03-08 21:13:09.825903"]]\
+  \cf4  (3.7ms)\cf2   commit transaction\
+ => #<User id: 2, first_name: "jane", lat_name: "Doe", email: "jane@email.com", password: "password", age: 55, created_at: "2017-03-08 21:13:09", updated_at: "2017-03-08 21:13:09"> \
+2.3.1 :012 > User.all\
+  \cf5 User Load (2.1ms)\cf2   \cf6 SELECT "users".* FROM "users"\cf2 \
+ => #<ActiveRecord::Relation [#<User id: 1, first_name: "John", lat_name: "Doe", email: "jd@email.com", password: "password", age: 5, created_at: "2017-03-08 21:10:58", updated_at: "2017-03-08 21:10:58">, #<User id: 2, first_name: "jane", lat_name: "Doe", email: "jane@email.com", password: "password", age: 55, created_at: "2017-03-08 21:13:09", updated_at: "2017-03-08 21:13:09">]> \
+2.3.1 :013 > Hirb.enable\
+ => true \
+2.3.1 :014 > User.all\
+  \cf4 User Load (3.3ms)\cf2   SELECT "users".* FROM "users"\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| id | first_name | lat_name | email          | password | age | created_at              | updated_at              |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| 1  | John       | Doe      | jd@email.com   | password | 5   | 2017-03-08 21:10:58 UTC | 2017-03-08 21:10:58 UTC |\
+| 2  | jane       | Doe      | jane@email.com | password | 55  | 2017-03-08 21:13:09 UTC | 2017-03-08 21:13:09 UTC |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+2 rows in set\
+2.3.1 :015 > User.first\
+  \cf5 User Load (3.8ms)\cf2   \cf6 SELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1\cf2 \
++----+------------+----------+--------------+----------+-----+-------------------------+-------------------------+\
+| id | first_name | lat_name | email        | password | age | created_at              | updated_at              |\
++----+------------+----------+--------------+----------+-----+-------------------------+-------------------------+\
+| 1  | John       | Doe      | jd@email.com | password | 5   | 2017-03-08 21:10:58 UTC | 2017-03-08 21:10:58 UTC |\
++----+------------+----------+--------------+----------+-----+-------------------------+-------------------------+\
+1 row in set\
+2.3.1 :016 > User.last\
+  \cf4 User Load (2.3ms)\cf2   SELECT  "users".* FROM "users"  ORDER BY "users"."id" DESC LIMIT 1\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| id | first_name | lat_name | email          | password | age | created_at              | updated_at              |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| 2  | jane       | Doe      | jane@email.com | password | 55  | 2017-03-08 21:13:09 UTC | 2017-03-08 21:13:09 UTC |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+1 row in set\
+2.3.1 :017 > User.find(2)\
+  \cf5 User Load (1.5ms)\cf2   \cf6 SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1\cf2   [["id", 2]]\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| id | first_name | lat_name | email          | password | age | created_at              | updated_at              |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| 2  | jane       | Doe      | jane@email.com | password | 55  | 2017-03-08 21:13:09 UTC | 2017-03-08 21:13:09 UTC |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+1 row in set\
+\
+2.3.1 :019 > User.find_by(first_name: "jane")\
+  \cf5 User Load (2.6ms)\cf2   \cf6 SELECT  "users".* FROM "users" WHERE "users"."first_name" = ? LIMIT 1\cf2   [["first_name", "jane"]]\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| id | first_name | lat_name | email          | password | age | created_at              | updated_at              |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| 2  | jane       | Doe      | jane@email.com | password | 55  | 2017-03-08 21:13:09 UTC | 2017-03-08 21:13:09 UTC |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+1 row in set\
+\
+2.3.1 :021 > User.create(first_name:"jane", lat_name:"smith", email:"jane@mail.com",password:"password",age:35)\
+  \cf4  (0.2ms)\cf2   begin transaction\
+  \cf5 SQL (3.5ms)\cf2   \cf6 INSERT INTO "users" ("first_name", "lat_name", "email", "password", "age", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)\cf2   [["first_name", "jane"], ["lat_name", "smith"], ["email", "jane@mail.com"], ["password", "password"], ["age", 35], ["created_at", "2017-03-08 21:16:57.893650"], ["updated_at", "2017-03-08 21:16:57.893650"]]\
+  \cf4  (5.0ms)\cf2   commit transaction\
++----+------------+----------+---------------+----------+-----+-------------------------+-------------------------+\
+| id | first_name | lat_name | email         | password | age | created_at              | updated_at              |\
++----+------------+----------+---------------+----------+-----+-------------------------+-------------------------+\
+| 3  | jane       | smith    | jane@mail.com | password | 35  | 2017-03-08 21:16:57 UTC | 2017-03-08 21:16:57 UTC |\
++----+------------+----------+---------------+----------+-----+-------------------------+-------------------------+\
+1 row in set\
+2.3.1 :022 > User.find_by(first_name: "jane")\
+  \cf5 User Load (2.7ms)\cf2   \cf6 SELECT  "users".* FROM "users" WHERE "users"."first_name" = ? LIMIT 1\cf2   [["first_name", "jane"]]\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| id | first_name | lat_name | email          | password | age | created_at              | updated_at              |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| 2  | jane       | Doe      | jane@email.com | password | 55  | 2017-03-08 21:13:09 UTC | 2017-03-08 21:13:09 UTC |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+1 row in set\
+2.3.1 :023 > User.where(first_name:"jane")\
+  \cf4 User Load (2.1ms)\cf2   SELECT "users".* FROM "users" WHERE "users"."first_name" = ?  [["first_name", "jane"]]\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| id | first_name | lat_name | email          | password | age | created_at              | updated_at              |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| 2  | jane       | Doe      | jane@email.com | password | 55  | 2017-03-08 21:13:09 UTC | 2017-03-08 21:13:09 UTC |\
+| 3  | jane       | smith    | jane@mail.com  | password | 35  | 2017-03-08 21:16:57 UTC | 2017-03-08 21:16:57 UTC |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+2 rows in set\
+2.3.1 :024 > User.where(first_name:"jane").select(:first_name, :lat_name, :email, :age)\
+  \cf5 User Load (2.8ms)\cf2   \cf6 SELECT "users"."first_name", "users"."lat_name", "users"."email", "users"."age" FROM "users" WHERE "users"."first_name" = ?\cf2   [["first_name", "jane"]]\
++----+------------+----------+----------------+-----+\
+| id | first_name | lat_name | email          | age |\
++----+------------+----------+----------------+-----+\
+|    | jane       | Doe      | jane@email.com | 55  |\
+|    | jane       | smith    | jane@mail.com  | 35  |\
++----+------------+----------+----------------+-----+\
+2 rows in set\
+2.3.1 :025 > User.all\
+  \cf4 User Load (2.4ms)\cf2   SELECT "users".* FROM "users"\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| id | first_name | lat_name | email          | password | age | created_at              | updated_at              |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| 1  | John       | Doe      | jd@email.com   | password | 5   | 2017-03-08 21:10:58 UTC | 2017-03-08 21:10:58 UTC |\
+| 2  | jane       | Doe      | jane@email.com | password | 55  | 2017-03-08 21:13:09 UTC | 2017-03-08 21:13:09 UTC |\
+| 3  | jane       | smith    | jane@mail.com  | password | 35  | 2017-03-08 21:16:57 UTC | 2017-03-08 21:16:57 UTC |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+3 rows in set\
+2.3.1 :026 > user.email = "jdoe@email.com"\
+ => "jdoe@email.com" \
+2.3.1 :027 > user.save\
+  \cf5  (0.1ms)\cf2   \cf6 begin transaction\cf2 \
+  \cf4 SQL (5.4ms)\cf2   UPDATE "users" SET "email" = ?, "updated_at" = ? WHERE "users"."id" = ?  [["email", "jdoe@email.com"], ["updated_at", "2017-03-08 21:20:12.754112"], ["id", 1]]\
+  \cf5  (5.8ms)\cf2   \cf6 commit transaction\cf2 \
+ => true \
+\
+2.3.1 :029 > User.all\
+  \cf4 User Load (2.5ms)\cf2   SELECT "users".* FROM "users"\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| id | first_name | lat_name | email          | password | age | created_at              | updated_at              |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| 1  | John       | Doe      | jdoe@email.com | password | 5   | 2017-03-08 21:10:58 UTC | 2017-03-08 21:20:12 UTC |\
+| 2  | jane       | Doe      | jane@email.com | password | 55  | 2017-03-08 21:13:09 UTC | 2017-03-08 21:13:09 UTC |\
+| 3  | jane       | smith    | jane@mail.com  | password | 35  | 2017-03-08 21:16:57 UTC | 2017-03-08 21:16:57 UTC |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+3 rows in set\
+2.3.1 :030 > User.third.update(age:37)\
+  \cf5 User Load (2.9ms)\cf2   \cf6 SELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1 OFFSET 2\cf2 \
+  \cf4  (0.2ms)\cf2   begin transaction\
+  \cf5 SQL (4.4ms)\cf2   \cf6 UPDATE "users" SET "age" = ?, "updated_at" = ? WHERE "users"."id" = ?\cf2   [["age", 37], ["updated_at", "2017-03-08 21:23:05.311315"], ["id", 3]]\
+  \cf4  (3.8ms)\cf2   commit transaction\
+ => true \
+2.3.1 :031 > User.all\
+  \cf5 User Load (1.9ms)\cf2   \cf6 SELECT "users".* FROM "users"\cf2 \
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| id | first_name | lat_name | email          | password | age | created_at              | updated_at              |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| 1  | John       | Doe      | jdoe@email.com | password | 5   | 2017-03-08 21:10:58 UTC | 2017-03-08 21:20:12 UTC |\
+| 2  | jane       | Doe      | jane@email.com | password | 55  | 2017-03-08 21:13:09 UTC | 2017-03-08 21:13:09 UTC |\
+| 3  | jane       | smith    | jane@mail.com  | password | 37  | 2017-03-08 21:16:57 UTC | 2017-03-08 21:23:05 UTC |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+3 rows in set\
+2.3.1 :032 > User.last.update(age:57)\
+  \cf4 User Load (2.4ms)\cf2   SELECT  "users".* FROM "users"  ORDER BY "users"."id" DESC LIMIT 1\
+  \cf5  (0.1ms)\cf2   \cf6 begin transaction\cf2 \
+  \cf4 SQL (4.6ms)\cf2   UPDATE "users" SET "age" = ?, "updated_at" = ? WHERE "users"."id" = ?  [["age", 57], ["updated_at", "2017-03-08 21:23:31.280877"], ["id", 3]]\
+  \cf5  (3.7ms)\cf2   \cf6 commit transaction\cf2 \
+ => true \
+2.3.1 :033 > User.all\
+  \cf4 User Load (2.3ms)\cf2   SELECT "users".* FROM "users"\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| id | first_name | lat_name | email          | password | age | created_at              | updated_at              |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| 1  | John       | Doe      | jdoe@email.com | password | 5   | 2017-03-08 21:10:58 UTC | 2017-03-08 21:20:12 UTC |\
+| 2  | jane       | Doe      | jane@email.com | password | 55  | 2017-03-08 21:13:09 UTC | 2017-03-08 21:13:09 UTC |\
+| 3  | jane       | smith    | jane@mail.com  | password | 57  | 2017-03-08 21:16:57 UTC | 2017-03-08 21:23:31 UTC |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+3 rows in set\
+2.3.1 :034 > u = User.second\
+  \cf5 User Load (4.1ms)\cf2   \cf6 SELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1 OFFSET 1\cf2 \
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| id | first_name | lat_name | email          | password | age | created_at              | updated_at              |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| 2  | jane       | Doe      | jane@email.com | password | 55  | 2017-03-08 21:13:09 UTC | 2017-03-08 21:13:09 UTC |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+1 row in set\
+2.3.1 :035 > u.destroy\
+  \cf4  (0.2ms)\cf2   begin transaction\
+  \cf5 SQL (6.6ms)\cf2   \cf6 DELETE FROM "users" WHERE "users"."id" = ?\cf2   [["id", 2]]\
+  \cf4  (4.2ms)\cf2   commit transaction\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| id | first_name | lat_name | email          | password | age | created_at              | updated_at              |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| 2  | jane       | Doe      | jane@email.com | password | 55  | 2017-03-08 21:13:09 UTC | 2017-03-08 21:13:09 UTC |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+1 row in set\
+2.3.1 :036 > User.all\
+  \cf5 User Load (2.6ms)\cf2   \cf6 SELECT "users".* FROM "users"\cf2 \
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| id | first_name | lat_name | email          | password | age | created_at              | updated_at              |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+| 1  | John       | Doe      | jdoe@email.com | password | 5   | 2017-03-08 21:10:58 UTC | 2017-03-08 21:20:12 UTC |\
+| 3  | jane       | smith    | jane@mail.com  | password | 57  | 2017-03-08 21:16:57 UTC | 2017-03-08 21:23:31 UTC |\
++----+------------+----------+----------------+----------+-----+-------------------------+-------------------------+\
+2 rows in set}
