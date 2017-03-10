@@ -1,0 +1,261 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf810
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fnil\fcharset0 AndaleMono;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red47\green255\blue18;\red0\green0\blue0;
+\red46\green174\blue187;\red0\green255\blue0;\red200\green20\blue201;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c15686\c99608\c7843;\csgray\c0\c90000;
+\cssrgb\c20198\c73241\c78251;\csgenericrgb\c0\c100000\c0;\cssrgb\c83397\c23076\c82665;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f0\fs24 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Retrieve all blogs and owners\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 2.3.1 :061 > Owner.joins(:user).joins(:blog).select("users.first_name as owner_name,blogs.name as blog_name ")\
+  \cf5 Owner Load (2.4ms)\cf3   \cf6 SELECT users.first_name as owner_name,blogs.name as blog_name  FROM "owners" INNER JOIN "users" ON "users"."id" = "owners"."user_id" INNER JOIN "blogs" ON "blogs"."id" = "owners"."blog_id"\cf3 \
++----+------------+------------+\
+| id | owner_name | blog_name  |\
++----+------------+------------+\
+|    | Udaya      | Techcrunch |\
+|    | Udaya      | Buzzfeed   |\
+|    | Udaya      | Wikipedia  |\
+|    | jack       | Google     |\
+|    | Jk         | Facebook   |\
+|    | Elon       | Techcrunch |\
+|    | Elon       | Buzzfeed   |\
+|    | Elon       | Wikipedia  |\
+|    | Elon       | Google     |\
+|    | Elon       | Facebook   |\
++----+------------+------------+\
+10 rows in set\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f0 \cf2 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec2 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\
+\
+\
+\
+Retrieve all blogs owned by the 3rd user\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 2.3.1 :066 > Owner.joins(:user).joins(:blog).where("user_id = 3").select("users.first_name as owner_name, blogs.name as blog_name")\
+  \cf5 Owner Load (1.8ms)\cf3   \cf6 SELECT users.first_name as owner_name, blogs.name as blog_name FROM "owners" INNER JOIN "users" ON "users"."id" = "owners"."user_id" INNER JOIN "blogs" ON "blogs"."id" = "owners"."blog_id" WHERE (user_id = 3)\cf3 \
++----+------------+------------+\
+| id | owner_name | blog_name  |\
++----+------------+------------+\
+|    | Elon       | Techcrunch |\
+|    | Elon       | Buzzfeed   |\
+|    | Elon       | Wikipedia  |\
+|    | Elon       | Google     |\
+|    | Elon       | Facebook   |\
++----+------------+------------+\
+\
+\
+\
+\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f0 \cf2 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec2 Retrieve all posts that were created by the 3rd user\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 2.3.1 :069 > User.third.posts\
+  \cf7 \cb4 User Load (2.0ms)\cf3 \cb4   SELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1 OFFSET 2\
+  \cf5 Post Load (1.7ms)\cf3   \cf6 SELECT "posts".* FROM "posts" WHERE "posts"."user_id" = ?\cf3   [["user_id", 3]]\
++----+---------------+--------------------------------------------------+---------+-------------------------+-------------------------+---------+\
+| id | title         | content                                          | blog_id | created_at              | updated_at              | user_id |\
++----+---------------+--------------------------------------------------+---------+-------------------------+-------------------------+---------+\
+| 13 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 5       | 2017-03-10 18:02:56 UTC | 2017-03-10 18:02:56 UTC | 3       |\
+| 14 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 5       | 2017-03-10 18:02:58 UTC | 2017-03-10 18:02:58 UTC | 3       |\
+| 15 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 5       | 2017-03-10 18:02:59 UTC | 2017-03-10 18:02:59 UTC | 3       |\
+| 16 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 1       | 2017-03-10 18:03:09 UTC | 2017-03-10 18:03:09 UTC | 3       |\
+| 17 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 1       | 2017-03-10 18:03:11 UTC | 2017-03-10 18:03:11 UTC | 3       |\
+| 18 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 1       | 2017-03-10 18:03:11 UTC | 2017-03-10 18:03:11 UTC | 3       |\
+| 19 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 2       | 2017-03-10 18:03:16 UTC | 2017-03-10 18:03:16 UTC | 3       |\
+| 20 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 2       | 2017-03-10 18:03:17 UTC | 2017-03-10 18:03:17 UTC | 3       |\
+| 21 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 2       | 2017-03-10 18:03:18 UTC | 2017-03-10 18:03:18 UTC | 3       |\
+| 22 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 3       | 2017-03-10 18:03:24 UTC | 2017-03-10 18:03:24 UTC | 3       |\
+| 23 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 3       | 2017-03-10 18:03:25 UTC | 2017-03-10 18:03:25 UTC | 3       |\
+| 24 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 3       | 2017-03-10 18:03:26 UTC | 2017-03-10 18:03:26 UTC | 3       |\
+| 25 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 3       | 2017-03-10 18:03:27 UTC | 2017-03-10 18:03:27 UTC | 3       |\
+| 26 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 4       | 2017-03-10 18:03:48 UTC | 2017-03-10 18:03:48 UTC | 3       |\
+| 27 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 4       | 2017-03-10 18:03:50 UTC | 2017-03-10 18:03:50 UTC | 3       |\
+| 28 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 4       | 2017-03-10 18:03:50 UTC | 2017-03-10 18:03:50 UTC | 3       |\
+| 29 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 5       | 2017-03-10 18:03:57 UTC | 2017-03-10 18:03:57 UTC | 3       |\
+| 30 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 5       | 2017-03-10 18:03:59 UTC | 2017-03-10 18:03:59 UTC | 3       |\
+| 31 | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 5       | 2017-03-10 18:04:00 UTC | 2017-03-10 18:04:00 UTC | 3       |\
++----+---------------+--------------------------------------------------+---------+-------------------------+-------------------------+---------+\
+19 rows in set\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f0 \cf2 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec2 \
+\
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 Retrieve all messages left by the 3rd user\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 2.3.1 :070 > User.third.messages\
+  \cf7 \cb4 User Load (2.0ms)\cf3 \cb4   SELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1 OFFSET 2\
+  \cf5 Message Load (1.9ms)\cf3   \cf6 SELECT "messages".* FROM "messages" WHERE "messages"."user_id" = ?\cf3   [["user_id", 3]]\
++----+-----------------+----------------------------------------+---------+-------------------------+-------------------------+---------+\
+| id | author          | message                                | post_id | created_at              | updated_at              | user_id |\
++----+-----------------+----------------------------------------+---------+-------------------------+-------------------------+---------+\
+| 4  | hfiuehuhk       | hvrfuvhfuivhfrhviurhhvuiuvhri687686986 | 1       | 2017-03-10 18:11:02 UTC | 2017-03-10 18:11:02 UTC | 3       |\
+| 5  | gviuefvbefiuvuf | hgviuefhuveuihvu9rhroui                | 1       | 2017-03-10 18:11:56 UTC | 2017-03-10 18:11:56 UTC | 3       |\
+| 6  | gviuefvbefiuvuf | hgviuefhuveuihvu9rhroui                | 3       | 2017-03-10 18:12:23 UTC | 2017-03-10 18:12:23 UTC | 3       |\
+| 7  | gviuefvbefiuvuf | hgviuefhuveuihvu9rhroui                | 3       | 2017-03-10 18:12:24 UTC | 2017-03-10 18:12:24 UTC | 3       |\
+| 8  | gviuefvbefiuvuf | hgviuefhuveuihvu9rhroui                | 3       | 2017-03-10 18:12:26 UTC | 2017-03-10 18:12:26 UTC | 3       |\
++----+-----------------+----------------------------------------+---------+-------------------------+-------------------------+---------+\
+5 rows in set\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f0 \cf2 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec2 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\
+\
+\
+\
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 Retrieve all posts associated with the blog id 5 as well as who left these posts.\
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 2.3.1 :081 > Blog.fifth.posts.joins(:user).joins(:blog).select("users.first_name,posts.title,posts.content,blogs.name,blogs.id as blog_id")\
+  \cf7 \cb4 Blog Load (1.5ms)\cf3 \cb4   SELECT  "blogs".* FROM "blogs"  ORDER BY "blogs"."id" ASC LIMIT 1 OFFSET 4\
+  \cf5 Post Load (1.7ms)\cf3   \cf6 SELECT users.first_name,posts.title,posts.content,blogs.name,blogs.id as blog_id FROM "posts" INNER JOIN "users" ON "users"."id" = "posts"."user_id" INNER JOIN "blogs" ON "blogs"."id" = "posts"."blog_id" WHERE "posts"."blog_id" = ?\cf3   [["blog_id", 5]]\
++----+---------------+--------------------------------------------------+---------+------------+----------+\
+| id | title         | content                                          | blog_id | first_name | name     |\
++----+---------------+--------------------------------------------------+---------+------------+----------+\
+|    | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 5       | jack       | Facebook |\
+|    | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 5       | jack       | Facebook |\
+|    | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 5       | jack       | Facebook |\
+|    | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 5       | jack       | Facebook |\
+|    | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 5       | jack       | Facebook |\
+|    | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 5       | Elon       | Facebook |\
+|    | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 5       | Elon       | Facebook |\
+|    | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 5       | Elon       | Facebook |\
+|    | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 5       | Elon       | Facebook |\
+|    | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 5       | Elon       | Facebook |\
+|    | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | 5       | Elon       | Facebook |\
++----+---------------+--------------------------------------------------+---------+------------+----------+\
+11 rows in set\
+\
+\
+\
+\
+\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f0 \cf2 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec2 Retrieve all messages associated with the blog id 5 along with all the user information of those who left the messages\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 2.3.1 :086 > Blog.fifth.posts.joins(:messages).joins(:user).select("users.first_name, messages.author, messages.message, posts.title, posts.content, posts.id as post_id, messages.id as message_id")\
+  \cf5 Blog Load (1.4ms)\cf3   \cf6 SELECT  "blogs".* FROM "blogs"  ORDER BY "blogs"."id" ASC LIMIT 1 OFFSET 4\cf3 \
+  \cf7 \cb4 Post Load (1.2ms)\cf3 \cb4   SELECT users.first_name, messages.author, messages.message, posts.title, posts.content, posts.id as post_id, messages.id as message_id FROM "posts" INNER JOIN "messages" ON "messages"."post_id" = "posts"."id" INNER JOIN "users" ON "users"."id" = "posts"."user_id" WHERE "posts"."blog_id" = ?  [["blog_id", 5]]\
++----+---------------+--------------------------------------------------+------------+-----------------+-------------------------+---------+------------+\
+| id | title         | content                                          | first_name | author          | message                 | post_id | message_id |\
++----+---------------+--------------------------------------------------+------------+-----------------+-------------------------+---------+------------+\
+|    | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | Elon       | gviuefvbefiuvuf | hgviuefhuveuihvu9rhroui | 31      | 9          |\
+|    | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | Elon       | gviuefvbefiuvuf | hgviuefhuveuihvu9rhroui | 31      | 10         |\
+|    | hvbfvfiu86678 | giedbcecugebchedvebvedhjvbhfgvuyefuuuegyufgyueyu | Elon       | gviuefvbefiuvuf | hgviuefhuveuihvu9rhroui | 31      | 11         |\
++----+---------------+--------------------------------------------------+------------+-----------------+-------------------------+---------+------------+\
+3 rows in set\
+2.3.1 :087 > \
+\
+\
+\
+\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f0 \cf2 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec2 Grab all user information of those that own the first blog (make this work by allowing 
+\b Blog.first.owners
+\b0  to work).\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 2.3.1 :103 > Blog.first.owners.joins(:user).joins(:blog).select("users.first_name as owner_name, blogs.name as blog_name, users.id as user_id , blogs.id as blog_id")\
+  \cf5 Blog Load (1.6ms)\cf3   \cf6 SELECT  "blogs".* FROM "blogs"  ORDER BY "blogs"."id" ASC LIMIT 1\cf3 \
+  \cf7 \cb4 Owner Load (1.8ms)\cf3 \cb4   SELECT users.first_name as owner_name, blogs.name as blog_name, users.id as user_id , blogs.id as blog_id FROM "owners" INNER JOIN "users" ON "users"."id" = "owners"."user_id" INNER JOIN "blogs" ON "blogs"."id" = "owners"."blog_id" WHERE "owners"."blog_id" = ?  [["blog_id", 1]]\
++----+---------+---------+------------+------------+\
+| id | user_id | blog_id | owner_name | blog_name  |\
++----+---------+---------+------------+------------+\
+|    | 1       | 1       | Udaya      | Techcrunch |\
+|    | 3       | 1       | Elon       | Techcrunch |\
++----+---------+---------+------------+------------+\
+2 rows in set\
+2.3.1 :104 > \
+\
+\
+\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f0 \cf2 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec2 \
+\
+Embedding rom into another orm\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs26 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 2.3.1 :030 > o = Owner.where(\{user: User.first, blog: Blog.first\})\
+  \cf7 User Load (1.9ms)\cf3   SELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1\
+  \cf5 Blog Load (1.9ms)\cf3   \cf6 SELECT  "blogs".* FROM "blogs"  ORDER BY "blogs"."id" ASC LIMIT 1\cf3 \
+  \cf7 Owner Load (1.7ms)\cf3   SELECT "owners".* FROM "owners" WHERE "owners"."user_id" = 1 AND "owners"."blog_id" = 1\
++----+---------+---------+-------------------------+-------------------------+\
+| id | user_id | blog_id | created_at              | updated_at              |\
++----+---------+---------+-------------------------+-------------------------+\
+| 7  | 1       | 1       | 2017-03-10 17:05:55 UTC | 2017-03-10 17:05:55 UTC |\
++----+---------+---------+-------------------------+-------------------------+\
+1 row in set
+\f0\fs24 \cf2 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec2 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\
+\
+\
+\
+\
+\
+Change it so that the first blog is no longer owned by the first user.\
+\
+\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs26 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 2.3.1 :030 > o = Owner.where(\{user: User.first, blog: Blog.first\})
+\f0\fs24 \cf2 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec2 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs26 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 o.update_all("user_id= 2")\
+  \cf7 SQL (16.0ms)\cf3   UPDATE "owners" SET user_id= 2 WHERE "owners"."user_id" = 1 AND "owners"."blog_id" = 1\
+ => 1 \
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f0\fs24 \cf2 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec2 \
+}
